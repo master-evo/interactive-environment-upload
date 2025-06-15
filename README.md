@@ -1,23 +1,31 @@
-# Manual Interativo 3D - FPS com Colisão
+# Internal Project: Interactive Environment Upload
 
-Este projeto é um visualizador 3D interativo desenvolvido com [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) e [Three.js], com foco em simular a navegação em primeira pessoa (FPS) dentro de um ambiente 3D, como um apartamento.
+This repository is an internal project for the development and testing of interactive 3D environments.
 
-## Funcionalidades
+## Purpose
 
-- Navegação com teclado (WASD)
-- Controle de câmera com o mouse (estilo FPS)
-- Crosshair central para visualização precisa
-- Sistema de colisão com obstáculos do modelo 3D
-- Altura da câmera ajustada para simular proporções humanas reais (1.8m)
+The goal of this project is to provide a sandbox for viewing and testing 3D models (.glb/.gltf) with custom HDR/EXR lightmaps, without relying on fixed files or the `/public` folder.
 
-## Uso
+## How it works
 
-1. Inicie o projeto com seu gerenciador de pacotes (`pnpm`, `npm` ou `yarn`)
-2. Clique na tela para ativar o controle de câmera
-3. Use `W`, `A`, `S`, `D` para se mover e o mouse para olhar ao redor
-4. A câmera colide automaticamente com os objetos da cena
+- **File Upload:**
+  - When starting the project, the user is presented with an upload screen.
+  - Two files must be uploaded:
+    - A 3D model in `.glb` or `.gltf` format.
+    - A lightmap file in `.hdr` or `.exr` format (HDRI image for lighting and environment).
+- **Visualization:**
+  - After upload, the 3D model is loaded into the interactive environment.
+  - The HDR/EXR lightmap is applied as the global environment and lighting.
+  - No files from the `/public` folder are used for the model or lightmap: everything is loaded from the user's upload.
+- **Navigation:**
+  - The user can navigate the environment in first person (FPS), with keyboard, mouse, and mobile controls.
+
+## Notes
+
+- This project is intended for internal use and development only.
+- Do not use in production without proper security and performance adaptations.
 
 ---
 
-Ideal para simulações de walkthrough de ambientes 3D realistas como apartamentos, plantas arquitetônicas ou jogos técnicos.
+If you need usage or integration instructions, check the source code or contact the responsible team.
 
