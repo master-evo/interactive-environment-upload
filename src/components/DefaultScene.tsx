@@ -24,6 +24,7 @@ function SceneContent({
   hdrUrl: string;
   disableEnvironment?: boolean;
 }) {
+  //@ts-expect-error: scene is not used
   const { set, gl, scene } = useThree();
   const camRef = useRef<THREE.PerspectiveCamera>(
     new THREE.PerspectiveCamera(
@@ -55,7 +56,9 @@ function SceneContent({
   }, [set]);
 
   const [envLoaded, setEnvLoaded] = useState(false);
+  //@ts-expect-error: envMap and LoadingEnv vars are not used
   const [envMap, setEnvMap] = useState<THREE.Texture | null>(null);
+  //@ts-expect-error: envMap and LoadingEnv vars are not used
   const [loadingEnv, setLoadingEnv] = useState(false);
 
   // Carrega HDR/EXR manualmente
