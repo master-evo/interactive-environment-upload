@@ -25,7 +25,6 @@ export class CollisionDetector {
 
   willCollide(from: THREE.Vector3, to: THREE.Vector3): boolean {
     this._tmpDirection.subVectors(to, from).normalize();
-    console.log('_tmpDirection', this._tmpDirection);
     const distance = from.distanceTo(to);
 
     if (distance < 0.01) return false;
