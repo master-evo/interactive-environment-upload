@@ -11,14 +11,16 @@ import {
   isMobile,
 } from '@/utils';
 import type { LoaderStep } from '@/components/hooks/useThreeLoader';
+import UploadScreen from '@/components/UploadScreen';
 
 export default function InteractiveManual() {
   const [progress, setProgress] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [started, setStarted] = useState(false);
-  const [showDebug, setShowDebug] = useState(false);
+  const [showDebug] = useState(false); // Mantém showDebug para MobileControls, mas remove setShowDebug
   const [currentType, setCurrentType] = useState<string | undefined>(undefined);
-  const envMode = import.meta.env.DEV;
+  const [modelUrl, setModelUrl] = useState<string | null>(null);
+  const [hdrUrl, setHdrUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (loaded && !started) {
@@ -26,6 +28,17 @@ export default function InteractiveManual() {
       setLoaded(false);
     }
   }, [loaded, started]);
+
+  if (!modelUrl || !hdrUrl) {
+    return (
+      <UploadScreen
+        onUpload={(model, hdr) => {
+          setModelUrl(model);
+          setHdrUrl(hdr);
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -46,34 +59,15 @@ export default function InteractiveManual() {
                   setLoaded(step.done);
                   setCurrentType(step.currentType);
                 }}
+                modelUrl={modelUrl}
+                hdrUrl={hdrUrl}
               />
               {isMobile && (
-                <>
-                  <MobileControls
-                    onMove={dispatchMobileMove}
-                    onLook={dispatchMobileLook}
-                    showDebug={showDebug}
-                  />
-                  {envMode && (
-                    <button
-                      onClick={() => setShowDebug((prev) => !prev)}
-                      style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        zIndex: 50,
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        padding: '6px 10px',
-                        fontSize: '12px',
-                      }}
-                    >
-                      {showDebug ? 'Ocultar Debug' : 'Mostrar Debug'}
-                    </button>
-                  )}
-                </>
+                <MobileControls
+                  onMove={dispatchMobileMove}
+                  onLook={dispatchMobileLook}
+                  showDebug={showDebug}
+                />
               )}
             </div>
           </div>

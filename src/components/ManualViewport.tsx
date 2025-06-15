@@ -9,11 +9,15 @@ import { useCallback } from 'react';
 interface IManualViewportProps {
   className: string;
   onLoading?: (step: LoaderStep) => void;
+  modelUrl: string;
+  hdrUrl: string;
 }
 
 export default function ManualViewport({
   className,
   onLoading,
+  modelUrl,
+  hdrUrl,
 }: IManualViewportProps) {
   const manager = DefaultLoadingManager;
 
@@ -29,7 +33,7 @@ export default function ManualViewport({
   return (
     <LoaderContext.Provider value={manager}>
       <Card className={className}>
-        <DefaultScene />
+        <DefaultScene modelUrl={modelUrl} hdrUrl={hdrUrl} />
       </Card>
     </LoaderContext.Provider>
   );
