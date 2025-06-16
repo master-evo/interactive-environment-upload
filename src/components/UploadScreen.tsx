@@ -44,7 +44,7 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
   }
 
   function detectHDR_EXR(source: File, type: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const name = source.name.toLowerCase();
       if (name.endsWith('.hdr')) {
         resolve('image/vnd.radiance');
