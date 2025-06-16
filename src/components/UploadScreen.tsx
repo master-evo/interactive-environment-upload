@@ -47,6 +47,7 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
             maxFiles={1}
             name="model"
             labelIdle="Arraste ou clique para selecionar o modelo (.glb/.gltf)"
+            acceptedFileTypes={['model/gltf-binary']}
             fileValidateTypeLabelExpectedTypes="Modelo 3D (.glb/.gltf)"
             fileValidateTypeLabelExpectedTypesMap={{
               'model/gltf-binary': '.glb',
@@ -66,6 +67,7 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
             maxFiles={1}
             name="hdr"
             labelIdle="Arraste ou clique para selecionar o HDR (.hdr/.exr)"
+            acceptedFileTypes={['image/vnd.radiance', 'image/exp-rgb']}
             fileValidateTypeLabelExpectedTypes="HDR Lightmap (.hdr/.exr)"
             fileValidateTypeLabelExpectedTypesMap={{
               'image/vnd.radiance': '.hdr',
