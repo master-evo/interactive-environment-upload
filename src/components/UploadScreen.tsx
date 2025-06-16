@@ -47,11 +47,11 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
             maxFiles={1}
             name="model"
             labelIdle="Arraste ou clique para selecionar o modelo (.glb/.gltf)"
-            // acceptedFileTypes={['.glb', '.gltf']}
-            // fileValidateTypeLabelExpectedTypesMap={{
-            //   '.glb': 'GLB 3D Model',
-            //   '.gltf': 'GLTF 3D Model',
-            // }}
+            fileValidateTypeLabelExpectedTypes="Modelo 3D (.glb/.gltf)"
+            fileValidateTypeLabelExpectedTypesMap={{
+              'model/gltf-binary': '.glb',
+            }}
+            labelFileTypeNotAllowed="Apenas .glb e .gltf são permitidos"
             required
           />
         </div>
@@ -66,11 +66,12 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
             maxFiles={1}
             name="hdr"
             labelIdle="Arraste ou clique para selecionar o HDR (.hdr/.exr)"
-            // acceptedFileTypes={['.hdr', '.exr']}
-            // fileValidateTypeLabelExpectedTypesMap={{
-            //   '.hdr': 'HDR Image',
-            //   '.exr': 'EXR Image',
-            // }}
+            fileValidateTypeLabelExpectedTypes="HDR Lightmap (.hdr/.exr)"
+            fileValidateTypeLabelExpectedTypesMap={{
+              'image/vnd.radiance': '.hdr',
+              'image/exp-rgb': '.exr',
+            }}
+            labelFileTypeNotAllowed="Apenas .hdr e .exr são permitidos"
             required
           />
         </div>
