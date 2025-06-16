@@ -30,6 +30,32 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
     }
   }
 
+  function detectGLTF(source: File, detectedType: string): Promise<string> {
+    return new Promise((resolve) => {
+      const name = source.name.toLowerCase();
+      if (name.endsWith('.glb')) {
+        resolve('model/gltf-binary');
+      } else if (name.endsWith('.gltf')) {
+        resolve('model/gltf+json');
+      } else {
+        resolve(detectedType);
+      }
+    });
+  }
+
+  function detectHDR_EXR(source: File, type: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const name = source.name.toLowerCase();
+      if (name.endsWith('.hdr')) {
+        resolve('image/vnd.radiance');
+      } else if (name.endsWith('.exr')) {
+        resolve('image/exp-rgb');
+      } else {
+        resolve(type);
+      }
+    });
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-neutral-900 text-white">
       <h1 className="text-2xl font-bold mb-4">
@@ -47,12 +73,13 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
             maxFiles={1}
             name="model"
             labelIdle="Arraste ou clique para selecionar o modelo (.glb/.gltf)"
-            acceptedFileTypes={['model/gltf-binary']}
-            fileValidateTypeLabelExpectedTypes="Modelo 3D (.glb/.gltf)"
+            acceptedFileTypes={['model/gltf-binary', 'model/gltf+json']}
+            fileValidateTypeDetectType={detectGLTF}
             fileValidateTypeLabelExpectedTypesMap={{
               'model/gltf-binary': '.glb',
+              'model/gltf+json': '.gltf',
             }}
-            labelFileTypeNotAllowed="Apenas .glb e .gltf são permitidos"
+            labelFileTypeNotAllowed="Apenas .glb ou .gltf são permitidos"
             required
           />
         </div>
@@ -68,7 +95,7 @@ export default function UploadScreen({ onUpload }: UploadScreenProps) {
             name="hdr"
             labelIdle="Arraste ou clique para selecionar o HDR (.hdr/.exr)"
             acceptedFileTypes={['image/vnd.radiance', 'image/exp-rgb']}
-            fileValidateTypeLabelExpectedTypes="HDR Lightmap (.hdr/.exr)"
+            fileValidateTypeDetectType={detectHDR_EXR}
             fileValidateTypeLabelExpectedTypesMap={{
               'image/vnd.radiance': '.hdr',
               'image/exp-rgb': '.exr',
