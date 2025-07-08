@@ -6,6 +6,7 @@ import { Environment } from '@react-three/drei';
 import StaticModel from './StaticModel';
 import { FpsCounter } from './Overlay/FpsCounter';
 import { RGBELoader, EXRLoader } from 'three-stdlib';
+import SceneGui from './SceneGui';
 
 interface IDefaultSceneProps {
   children?: React.ReactNode;
@@ -24,8 +25,7 @@ function SceneContent({
   hdrUrl: string;
   disableEnvironment?: boolean;
 }) {
-  //@ts-expect-error: scene is not used
-  const { set, gl, scene } = useThree();
+  const { set, gl } = useThree();
   const camRef = useRef<THREE.PerspectiveCamera>(
     new THREE.PerspectiveCamera(
       75,
@@ -56,10 +56,11 @@ function SceneContent({
   }, [set]);
 
   const [envLoaded, setEnvLoaded] = useState(false);
-  //@ts-expect-error: envMap and LoadingEnv vars are not used
   const [envMap, setEnvMap] = useState<THREE.Texture | null>(null);
-  //@ts-expect-error: envMap and LoadingEnv vars are not used
   const [loadingEnv, setLoadingEnv] = useState(false);
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(0.5);
+  const [environmentIntensity, setEnvironmentIntensity] = useState(0.5);
+  const [lightMapIntensity, setLightMapIntensity] = useState(1.0);
 
   // Carrega HDR/EXR manualmente
   useEffect(() => {
@@ -95,7 +96,15 @@ function SceneContent({
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <SceneGui
+        ambientLightIntensity={ambientLightIntensity}
+        setAmbientLightIntensity={setAmbientLightIntensity}
+        environmentIntensity={environmentIntensity}
+        setEnvironmentIntensity={setEnvironmentIntensity}
+        lightMapIntensity={lightMapIntensity}
+        setLightMapIntensity={setLightMapIntensity}
+      />
+      <ambientLight intensity={ambientLightIntensity} />
       <spotLight
         position={[10, 10, 10]}
         angle={0.15}
@@ -108,13 +117,14 @@ function SceneContent({
         background
         backgroundIntensity={0.5}
         blur={0.5}
-        environmentIntensity={0.5}
+        environmentIntensity={environmentIntensity}
         resolution={32}
       />
       {children}
       <StaticModel
         url={modelUrl}
         lightmapUrl={hdrUrl}
+        lightMapIntensity={lightMapIntensity}
         onLoaded={() => {
           setEnvLoaded(true);
         }}

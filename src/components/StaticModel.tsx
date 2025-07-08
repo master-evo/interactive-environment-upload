@@ -15,12 +15,14 @@ interface IStaticModelProps {
   url: string;
   lightmapUrl?: string;
   onLoaded?: () => void;
+  lightMapIntensity?: number;
 }
 
 export default function StaticModel({
   url,
   lightmapUrl,
   onLoaded,
+  lightMapIntensity = 1.0,
 }: IStaticModelProps) {
   const group = useRef<Group>(null);
   const manager = useLoaderManager();
@@ -61,7 +63,7 @@ export default function StaticModel({
           const material = mesh.material as MeshStandardMaterial;
           if (loadedLightmap) {
             material.lightMap = loadedLightmap;
-            material.lightMapIntensity = 1.0;
+            material.lightMapIntensity = lightMapIntensity;
             material.needsUpdate = true;
           }
         }
@@ -91,7 +93,7 @@ export default function StaticModel({
     } else {
       applyLightmap();
     }
-  }, [scene, lightmapUrl]);
+  }, [scene, lightmapUrl, lightMapIntensity]);
 
   if (!scene) return null;
 
