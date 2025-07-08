@@ -56,7 +56,9 @@ function SceneContent({
   }, [set]);
 
   const [envLoaded, setEnvLoaded] = useState(false);
+  // @ts-expect-error: envMap not used
   const [envMap, setEnvMap] = useState<THREE.Texture | null>(null);
+  // @ts-expect-error: loadingEnv not used
   const [loadingEnv, setLoadingEnv] = useState(false);
   const [ambientLightIntensity, setAmbientLightIntensity] = useState(0.5);
   const [environmentIntensity, setEnvironmentIntensity] = useState(0.5);
