@@ -1,3 +1,4 @@
+import Effects from '@/components/Effects';
 import { Environment } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
@@ -62,23 +63,27 @@ function SceneContent({
   const [loadingEnv, setLoadingEnv] = useState(false);
 
   const { ambientLightIntensity, environmentIntensity, lightMapIntensity } =
-    useControls('scene', {
-      ambientLightIntensity: {
-        value: 0,
-        min: 0,
-        step: 0.1,
+    useControls(
+      'scene',
+      {
+        ambientLightIntensity: {
+          value: 0,
+          min: 0,
+          step: 0.1,
+        },
+        environmentIntensity: {
+          value: 0.2,
+          min: 0,
+          step: 0.1,
+        },
+        lightMapIntensity: {
+          value: 1,
+          min: 0,
+          step: 0.1,
+        },
       },
-      environmentIntensity: {
-        value: 0.2,
-        min: 0,
-        step: 0.1,
-      },
-      lightMapIntensity: {
-        value: 1,
-        min: 0,
-        step: 0.1,
-      },
-    });
+      { collapsed: true },
+    );
 
   // Carrega HDR/EXR manualmente
   useEffect(() => {
@@ -140,6 +145,7 @@ function SceneContent({
         }}
       />
       {envLoaded && <PlayerController camera={camRef.current} />}
+      <Effects />
     </>
   );
 }
