@@ -1,12 +1,12 @@
+import { Environment } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
+import { useControls } from 'leva';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import PlayerController from './PlayerController';
-import { Environment } from '@react-three/drei';
-import StaticModel from './StaticModel';
+import { EXRLoader, RGBELoader } from 'three-stdlib';
 import { FpsCounter } from './Overlay/FpsCounter';
-import { RGBELoader, EXRLoader } from 'three-stdlib';
-import SceneGui from './SceneGui';
+import PlayerController from './PlayerController';
+import StaticModel from './StaticModel';
 
 interface IDefaultSceneProps {
   children?: React.ReactNode;
@@ -60,9 +60,25 @@ function SceneContent({
   const [envMap, setEnvMap] = useState<THREE.Texture | null>(null);
   // @ts-expect-error: loadingEnv not used
   const [loadingEnv, setLoadingEnv] = useState(false);
-  const [ambientLightIntensity, setAmbientLightIntensity] = useState(0.5);
-  const [environmentIntensity, setEnvironmentIntensity] = useState(0.5);
-  const [lightMapIntensity, setLightMapIntensity] = useState(1.0);
+
+  const { ambientLightIntensity, environmentIntensity, lightMapIntensity } =
+    useControls('scene', {
+      ambientLightIntensity: {
+        value: 0,
+        min: 0,
+        step: 0.1,
+      },
+      environmentIntensity: {
+        value: 0.2,
+        min: 0,
+        step: 0.1,
+      },
+      lightMapIntensity: {
+        value: 1,
+        min: 0,
+        step: 0.1,
+      },
+    });
 
   // Carrega HDR/EXR manualmente
   useEffect(() => {
@@ -98,14 +114,6 @@ function SceneContent({
 
   return (
     <>
-      <SceneGui
-        ambientLightIntensity={ambientLightIntensity}
-        setAmbientLightIntensity={setAmbientLightIntensity}
-        environmentIntensity={environmentIntensity}
-        setEnvironmentIntensity={setEnvironmentIntensity}
-        lightMapIntensity={lightMapIntensity}
-        setLightMapIntensity={setLightMapIntensity}
-      />
       <ambientLight intensity={ambientLightIntensity} />
       <spotLight
         position={[10, 10, 10]}
