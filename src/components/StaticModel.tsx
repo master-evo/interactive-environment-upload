@@ -1,15 +1,15 @@
 import { useLoaderManager } from '@/components/context/loaderContext';
+import { useGltfWithManager } from '@/components/hooks/useGltfWithManager';
 import { useEffect, useRef } from 'react';
 import {
   Group,
   LinearSRGBColorSpace,
   Mesh,
+  MeshBasicMaterial,
   MeshStandardMaterial,
   Texture,
-  MeshBasicMaterial,
 } from 'three';
 import { RGBELoader } from 'three-stdlib';
-import { useGltfWithManager } from '@/components/hooks/useGltfWithManager';
 
 interface IStaticModelProps {
   url: string;
@@ -61,7 +61,8 @@ export default function StaticModel({
           }
 
           const material = mesh.material as MeshStandardMaterial;
-          if (loadedLightmap) {
+          if (loadedLightmap && mesh.geometry.attributes.uv1) {
+            loadedLightmap.channel = 1;
             material.lightMap = loadedLightmap;
             material.lightMapIntensity = lightMapIntensity;
             material.needsUpdate = true;
