@@ -1,4 +1,5 @@
 import {
+  Autofocus,
   Bloom,
   DepthOfField,
   EffectComposer,
@@ -77,6 +78,37 @@ export default function Effects() {
         value: 1,
         min: 0,
         step: 0.1,
+      },
+    },
+    { collapsed: true },
+  );
+
+  const {
+    apply: autofocusApply,
+    smoothTime,
+    focusRange,
+    bokehScale: autofocusBokehScale,
+  } = useControls(
+    'autofocus',
+    {
+      apply: { options: [true, false], value: false },
+      smoothTime: {
+        value: 0.5,
+        min: 0,
+        max: 1,
+        step: 0.1,
+      },
+      focusRange: {
+        value: 0.05,
+        min: 0,
+        max: 1,
+        step: 0.01,
+      },
+      bokehScale: {
+        value: 4,
+        min: 0,
+        max: 50,
+        step: 0.5,
       },
     },
     { collapsed: true },
@@ -227,6 +259,16 @@ export default function Effects() {
           focalLength={focalLength}
           bokehScale={bokehScale}
           height={480}
+        />
+      ) : (
+        <></>
+      )}
+
+      {autofocusApply ? (
+        <Autofocus
+          bokehScale={autofocusBokehScale}
+          focusRange={focusRange}
+          smoothTime={smoothTime}
         />
       ) : (
         <></>
