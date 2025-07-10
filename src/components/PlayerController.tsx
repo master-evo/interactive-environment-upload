@@ -16,7 +16,7 @@ export default function PlayerController({
   const yaw = useRef(0);
   const pitch = useRef(0);
   const pointerLocked = useRef(false);
-  const { scene } = useThree();
+  const { gl, scene } = useThree();
 
   const collisionDetectorRef = useRef<CollisionDetector | null>(null);
   const cameraControllerRef = useRef<CameraController | null>(null);
@@ -63,7 +63,11 @@ export default function PlayerController({
       );
     };
 
-    const onClick = () => {
+    const onClick = (event: MouseEvent) => {
+      event.preventDefault();
+
+      if (event.target !== gl.domElement) return;
+
       if (!pointerLocked.current) document.body.requestPointerLock();
     };
 
