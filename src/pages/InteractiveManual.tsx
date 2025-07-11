@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { LoadingOverlay } from '@/components/Overlay/LoadingOverlay';
+import type { LoaderStep } from '@/components/hooks/useThreeLoader';
 import ManualViewport from '@/components/ManualViewport';
-import MobileControls from '@/components/MobileControls';
+import { LoadingOverlay } from '@/components/Overlay/LoadingOverlay';
 import Center from '@/components/ui/center';
 import Container from '@/components/ui/container';
+import UploadScreen from '@/components/UploadScreen';
+import MobileControls from '@/features/player-controller/MobileControls';
 import {
   dispatchMobileLook,
   dispatchMobileMove,
   getLoadingLabelByType,
   isMobile,
 } from '@/utils';
-import type { LoaderStep } from '@/components/hooks/useThreeLoader';
-import UploadScreen from '@/components/UploadScreen';
+import { useEffect, useState } from 'react';
 
 export default function InteractiveManual() {
   const [progress, setProgress] = useState(0);

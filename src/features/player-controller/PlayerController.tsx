@@ -1,5 +1,5 @@
-import { CameraController } from '@/core/CameraController';
-import { CollisionDetector } from '@/core/CollisionDetector';
+import { CameraController } from '@/features/player-controller/CameraController';
+import { CollisionDetector } from '@/features/player-controller/CollisionDetector';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
