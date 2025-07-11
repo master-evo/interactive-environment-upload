@@ -1,5 +1,5 @@
-import DefaultScene from '@/components/DefaultScene';
 import { Card } from '@/components/ui/card';
+import SceneController from '@/features/debug/SceneController';
 import { LoaderContext } from '@/features/loader/contexts/loaderContext';
 import type { LoaderStep } from '@/features/loader/hooks/useThreeLoader';
 import { useThreeLoader } from '@/features/loader/hooks/useThreeLoader';
@@ -33,7 +33,7 @@ export default function ManualViewport({
   return (
     <LoaderContext.Provider value={manager}>
       <Card className={className}>
-        <DefaultScene modelUrl={modelUrl} hdrUrl={hdrUrl} />
+        <SceneController modelUrl={modelUrl} hdrUrl={hdrUrl} />
       </Card>
     </LoaderContext.Provider>
   );

@@ -1,5 +1,4 @@
 import EffectsController from '@/features/debug/EffectsController';
-import useSceneController from '@/features/debug/hooks/useSceneController';
 import { Bvh, Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
@@ -20,11 +19,21 @@ function SceneContent({
   children,
   modelUrl,
   hdrUrl,
+  sceneSettings,
 }: {
   children: React.ReactNode;
   modelUrl: string;
   hdrUrl: string;
   disableEnvironment?: boolean;
+  sceneSettings: {
+    ambientLightIntensity: number;
+    environmentIntensity: number;
+    lightMapIntensity: number;
+    sun: boolean;
+    distance: number;
+    position: [number, number, number];
+    mieCoefficient: number;
+  };
 }) {
   const { set, gl } = useThree();
   const camRef = useRef<THREE.PerspectiveCamera>(
@@ -61,8 +70,6 @@ function SceneContent({
   const [envMap, setEnvMap] = useState<THREE.Texture | null>(null);
   // @ts-expect-error: loadingEnv not used
   const [loadingEnv, setLoadingEnv] = useState(false);
-
-  const sceneSettings = useSceneController();
 
   // Carrega HDR/EXR manualmente
   useEffect(() => {
@@ -144,12 +151,28 @@ export default function DefaultScene({
   className,
   modelUrl,
   hdrUrl,
-}: IDefaultSceneProps & { disableEnvironment?: boolean }) {
+  sceneSettings,
+}: IDefaultSceneProps & {
+  disableEnvironment?: boolean;
+  sceneSettings: {
+    ambientLightIntensity: number;
+    environmentIntensity: number;
+    lightMapIntensity: number;
+    sun: boolean;
+    distance: number;
+    position: [number, number, number];
+    mieCoefficient: number;
+  };
+}) {
   return (
     <>
       <FpsCounter />
       <Canvas legacy className={className}>
-        <SceneContent modelUrl={modelUrl} hdrUrl={hdrUrl}>
+        <SceneContent
+          modelUrl={modelUrl}
+          hdrUrl={hdrUrl}
+          sceneSettings={sceneSettings}
+        >
           {children}
         </SceneContent>
       </Canvas>

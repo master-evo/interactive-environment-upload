@@ -1,34 +1,47 @@
 import { folder, useControls } from 'leva';
 
-export default function useSceneController() {
+export default function useSceneController(
+  initial?: Partial<{
+    ambientLightIntensity: number;
+    environmentIntensity: number;
+    lightMapIntensity: number;
+    sun: boolean;
+    distance: number;
+    position: [number, number, number];
+    mieCoefficient: number;
+  }>,
+) {
   const sceneValues = useControls(
     'scene',
     {
       ambientLightIntensity: {
-        value: 0,
+        value: initial?.ambientLightIntensity ?? 0,
         min: 0,
         step: 0.1,
       },
       environmentIntensity: {
-        value: 0.2,
+        value: initial?.environmentIntensity ?? 0.2,
         min: 0,
         step: 0.1,
       },
       lightMapIntensity: {
-        value: 1,
+        value: initial?.lightMapIntensity ?? 1,
         min: 0,
         step: 0.1,
       },
       sun: folder({
-        sun: { options: [true, false], value: true },
+        sun: {
+          options: [true, false],
+          value: initial?.sun ?? true,
+        },
         distance: {
-          value: 450000,
+          value: initial?.distance ?? 450000,
           min: 100,
           step: 1000,
         },
-        position: [1, 1, -1],
+        position: initial?.position ?? [1, 1, -1],
         mieCoefficient: {
-          value: 0,
+          value: initial?.mieCoefficient ?? 0,
           min: 0,
           step: 0.0001,
         },
