@@ -1,7 +1,7 @@
+import useSceneController from '@/features/debug/useSceneController';
 import Effects from '@/features/effects/Effects';
 import { Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
-import { folder, useControls } from 'leva';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { EXRLoader, RGBELoader } from 'three-stdlib';
@@ -62,47 +62,7 @@ function SceneContent({
   // @ts-expect-error: loadingEnv not used
   const [loadingEnv, setLoadingEnv] = useState(false);
 
-  const {
-    ambientLightIntensity,
-    environmentIntensity,
-    lightMapIntensity,
-    distance,
-    mieCoefficient,
-    position,
-  } = useControls(
-    'scene',
-    {
-      ambientLightIntensity: {
-        value: 0,
-        min: 0,
-        step: 0.1,
-      },
-      environmentIntensity: {
-        value: 0.2,
-        min: 0,
-        step: 0.1,
-      },
-      lightMapIntensity: {
-        value: 1,
-        min: 0,
-        step: 0.1,
-      },
-      sun: folder({
-        distance: {
-          value: 450000,
-          min: 100,
-          step: 1000,
-        },
-        position: [1, 1, -1],
-        mieCoefficient: {
-          value: 0,
-          min: 0,
-          step: 0.0001,
-        },
-      }),
-    },
-    { collapsed: true },
-  );
+  const sceneSettings = useSceneController();
 
   // Carrega HDR/EXR manualmente
   useEffect(() => {
@@ -138,7 +98,7 @@ function SceneContent({
 
   return (
     <>
-      <ambientLight intensity={ambientLightIntensity} />
+      <ambientLight intensity={sceneSettings.ambientLightIntensity} />
       <spotLight
         position={[10, 10, 10]}
         angle={0.15}
@@ -151,19 +111,22 @@ function SceneContent({
         background
         backgroundIntensity={0.5}
         blur={0.5}
-        environmentIntensity={environmentIntensity}
+        environmentIntensity={sceneSettings.environmentIntensity}
         resolution={32}
       />
-      <Sky
-        distance={distance}
-        sunPosition={position}
-        mieCoefficient={mieCoefficient}
-      />
+      {sceneSettings.sun && (
+        <Sky
+          distance={sceneSettings.distance}
+          sunPosition={sceneSettings.position}
+          mieCoefficient={sceneSettings.mieCoefficient}
+        />
+      )}
+
       {children}
       <StaticModel
         url={modelUrl}
         lightmapUrl={hdrUrl}
-        lightMapIntensity={lightMapIntensity}
+        lightMapIntensity={sceneSettings.lightMapIntensity}
         onLoaded={() => {
           setEnvLoaded(true);
         }}
