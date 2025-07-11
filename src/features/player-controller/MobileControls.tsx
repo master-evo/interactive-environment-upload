@@ -1,4 +1,4 @@
-import { FpsCounter } from '@/components/Overlay/FpsCounter';
+import { FpsCounter } from '@/features/debug/FpsCounter';
 import clsx from 'clsx';
 import nipplejs from 'nipplejs';
 import { useEffect, useRef, useState } from 'react';

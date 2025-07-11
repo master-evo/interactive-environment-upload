@@ -5,8 +5,8 @@ import { useControls } from 'leva';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { EXRLoader, RGBELoader } from 'three-stdlib';
+import { FpsCounter } from '../features/debug/FpsCounter';
 import PlayerController from '../features/player-controller/PlayerController';
-import { FpsCounter } from './Overlay/FpsCounter';
 import StaticModel from './StaticModel';
 
 interface IDefaultSceneProps {
