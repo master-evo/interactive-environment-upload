@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import { blends } from '@/features/effects/consts';
 import type { HueSaturationProps } from '@/features/effects/types';
 import { useControls } from 'leva';
@@ -29,6 +30,10 @@ export default function useHueSaturationController(
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('hueSaturation', hueSaturationValues);
 
   return hueSaturationValues;
 }

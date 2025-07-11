@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import type { DOFProps } from '@/features/effects/types';
 import { useControls } from 'leva';
 
@@ -29,6 +30,10 @@ export default function useDepthOfFieldController(initial?: Partial<DOFProps>) {
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('dof', depthOfFieldValues);
 
   return depthOfFieldValues;
 }

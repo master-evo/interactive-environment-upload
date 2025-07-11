@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import { blends, toneMappings } from '@/features/effects/consts';
 import type { ToneMappingProps } from '@/features/effects/types';
 import { useControls } from 'leva';
@@ -52,6 +53,10 @@ export default function useToneMappingController(
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('toneMapping', toneMappingValues);
 
   return toneMappingValues;
 }

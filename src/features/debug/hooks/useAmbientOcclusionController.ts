@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import type { AOProps } from '@/features/effects/types';
 import { useControls } from 'leva';
 
@@ -45,6 +46,10 @@ export default function useAmbientOcclusionController(
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('ao', aoValues);
 
   return aoValues;
 }

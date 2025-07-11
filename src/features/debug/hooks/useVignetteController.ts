@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import { blends } from '@/features/effects/consts';
 import type { VignetteProps } from '@/features/effects/types';
 import { useControls } from 'leva';
@@ -32,6 +33,10 @@ export default function useVignetteController(
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('vignette', vignetteValues);
 
   return vignetteValues;
 }

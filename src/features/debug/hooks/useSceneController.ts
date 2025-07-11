@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import { folder, useControls } from 'leva';
 
 export default function useSceneController(
@@ -49,6 +50,10 @@ export default function useSceneController(
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('scene', sceneValues);
 
   return sceneValues;
 }

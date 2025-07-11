@@ -1,3 +1,4 @@
+import { useSettings } from '@/features/debug/hooks/useSettings';
 import type { AutoFocusProps } from '@/features/effects/types';
 import { useControls } from 'leva';
 
@@ -32,6 +33,10 @@ export default function useAutoFocusController(
     },
     { collapsed: true },
   );
+
+  const { set } = useSettings();
+
+  set('autoFocus', autoFocusValue);
 
   return autoFocusValue;
 }
