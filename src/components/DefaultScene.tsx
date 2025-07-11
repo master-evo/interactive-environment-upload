@@ -1,4 +1,4 @@
-import Effects from '@/components/Effects';
+import Effects from '@/features/effects/Effects';
 import { Environment } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
