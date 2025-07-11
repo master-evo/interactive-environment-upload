@@ -1,0 +1,58 @@
+export const effects = {
+  bloom: {
+    apply: true,
+    intensity: 0.8,
+    luminanceThreshold: 2.099999999999996,
+    luminanceSmoothing: 9,
+    blend: 'SCREEN',
+  },
+  ao: {
+    apply: true,
+    radius: 4,
+    distanceFalloff: 1,
+    intensity: 1,
+    color: '#000000',
+    samples: 16,
+    denoiseSamples: 8,
+    denoiseRadius: 12,
+  },
+  aa: {
+    apply: true,
+  },
+  autoFocus: {
+    apply: true,
+    smoothTime: 0.2,
+    focusRange: 0.02,
+    bokehScale: 7.5,
+  },
+  dof: {
+    apply: false,
+    focusDistance: 0,
+    focalLength: 0.02,
+    bokehScale: 1,
+  },
+  toneMapping: {
+    apply: true,
+    mode: 'REINHARD2_ADAPTIVE',
+    blend: 'SRC',
+    adaptive: true,
+    middleGrey: 1.5,
+    maxLuminance: 16,
+    minLuminance: 0.5,
+    averageLuminance: 1,
+    adaptationRate: 1,
+  },
+  vignette: {
+    apply: true,
+    eskil: true,
+    blend: 'SRC',
+    offset: 0.5,
+    darkness: 1.2,
+  },
+  hueSaturation: {
+    apply: true,
+    blend: 'SRC',
+    saturation: 0.2,
+    hue: 0,
+  },
+};

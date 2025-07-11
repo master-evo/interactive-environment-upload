@@ -1,4 +1,5 @@
 import { Card } from '@/components/ui/card';
+import { scene } from '@/consts/scene';
 import { SettingsProvider } from '@/features/debug/context/SettingsProvider';
 import SceneController from '@/features/debug/SceneController';
 import { LoaderContext } from '@/features/loader/contexts/loaderContext';
@@ -35,7 +36,11 @@ export default function ManualViewport({
     <LoaderContext.Provider value={manager}>
       <SettingsProvider>
         <Card className={className}>
-          <SceneController modelUrl={modelUrl} hdrUrl={hdrUrl} />
+          <SceneController
+            modelUrl={modelUrl}
+            hdrUrl={hdrUrl}
+            sceneSettings={scene}
+          />
         </Card>
       </SettingsProvider>
     </LoaderContext.Provider>

@@ -1,3 +1,4 @@
+import { effects } from '@/consts/effects';
 import CopyButton from '@/features/debug/CopyButton';
 import EffectsController from '@/features/debug/EffectsController';
 import { Bvh, Environment, Sky } from '@react-three/drei';
@@ -142,7 +143,7 @@ function SceneContent({
       </Bvh>
 
       {envLoaded && <PlayerController camera={camRef.current} />}
-      <EffectsController />
+      <EffectsController {...effects} />
       <CopyButton />
     </>
   );
