@@ -1,7 +1,7 @@
-import { useLoaderManager } from '@/components/context/loaderContext';
+import { useLoaderManager } from '@/features/loader/contexts/loaderContext';
 import { useEffect, useMemo, useState } from 'react';
-import { GLTFLoader, type GLTF } from 'three-stdlib';
 import { Group } from 'three';
+import { GLTFLoader, type GLTF } from 'three-stdlib';
 
 const gltfCache = new Map<string, Promise<GLTF>>();
 

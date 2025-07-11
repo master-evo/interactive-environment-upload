@@ -1,9 +1,9 @@
-import type { LoaderStep } from '@/components/hooks/useThreeLoader';
 import ManualViewport from '@/components/ManualViewport';
-import { LoadingOverlay } from '@/components/Overlay/LoadingOverlay';
 import Center from '@/components/ui/center';
 import Container from '@/components/ui/container';
 import UploadScreen from '@/components/UploadScreen';
+import { LoadingOverlay } from '@/features/loader/components/LoadingOverlay';
+import type { LoaderStep } from '@/features/loader/hooks/useThreeLoader';
 import MobileControls from '@/features/player-controller/MobileControls';
 import {
   dispatchMobileLook,

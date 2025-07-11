@@ -1,10 +1,10 @@
 import DefaultScene from '@/components/DefaultScene';
 import { Card } from '@/components/ui/card';
-import { LoaderContext } from '@/components/context/loaderContext';
-import { useThreeLoader } from '@/components/hooks/useThreeLoader';
-import type { LoaderStep } from '@/components/hooks/useThreeLoader';
-import { DefaultLoadingManager } from 'three';
+import { LoaderContext } from '@/features/loader/contexts/loaderContext';
+import type { LoaderStep } from '@/features/loader/hooks/useThreeLoader';
+import { useThreeLoader } from '@/features/loader/hooks/useThreeLoader';
 import { useCallback } from 'react';
+import { DefaultLoadingManager } from 'three';
 
 interface IManualViewportProps {
   className: string;

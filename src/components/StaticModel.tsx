@@ -1,5 +1,5 @@
-import { useLoaderManager } from '@/components/context/loaderContext';
-import { useGltfWithManager } from '@/components/hooks/useGltfWithManager';
+import { useLoaderManager } from '@/features/loader/contexts/loaderContext';
+import { useGltfWithManager } from '@/features/loader/hooks/useGltfWithManager';
 import { useEffect, useRef } from 'react';
 import {
   Group,
