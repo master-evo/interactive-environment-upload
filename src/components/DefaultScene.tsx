@@ -1,5 +1,5 @@
-import useSceneController from '@/features/debug/useSceneController';
-import Effects from '@/features/effects/Effects';
+import EffectsController from '@/features/debug/EffectsController';
+import useSceneController from '@/features/debug/hooks/useSceneController';
 import { Bvh, Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
@@ -134,7 +134,7 @@ function SceneContent({
       </Bvh>
 
       {envLoaded && <PlayerController camera={camRef.current} />}
-      <Effects />
+      <EffectsController />
     </>
   );
 }

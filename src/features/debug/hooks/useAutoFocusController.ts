@@ -1,24 +1,30 @@
+import type { AutoFocusProps } from '@/features/effects/types';
 import { useControls } from 'leva';
 
-export default function useAutoFocusController() {
+export default function useAutoFocusController(
+  initial?: Partial<AutoFocusProps>,
+) {
   const autoFocusValue = useControls(
     'autofocus',
     {
-      apply: { options: [true, false], value: false },
+      apply: {
+        options: [true, false],
+        value: initial?.apply ?? false,
+      },
       smoothTime: {
-        value: 0.5,
+        value: initial?.smoothTime ?? 0.5,
         min: 0,
         max: 1,
         step: 0.1,
       },
       focusRange: {
-        value: 0.05,
+        value: initial?.focusRange ?? 0.05,
         min: 0,
         max: 1,
         step: 0.01,
       },
       bokehScale: {
-        value: 4,
+        value: initial?.bokehScale ?? 4,
         min: 0,
         max: 50,
         step: 0.5,

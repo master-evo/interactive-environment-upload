@@ -1,11 +1,3 @@
-import useAmbientOcclusionController from '@/features/debug/useAmbientOcclusionController';
-import useAntiAliasingController from '@/features/debug/useAntiAliasingController';
-import useAutoFocusController from '@/features/debug/useAutoFocusController';
-import useBloomController from '@/features/debug/useBloomController';
-import useDepthOfFieldController from '@/features/debug/useDepthOfFieldController';
-import useHueSaturationController from '@/features/debug/useHueSaturationController';
-import useToneMappingController from '@/features/debug/useToneMappingController';
-import useVignetteController from '@/features/debug/useVignetteController';
 import { blends, toneMappings } from '@/features/effects/consts';
 import {
   Autofocus,
@@ -19,16 +11,75 @@ import {
   Vignette,
 } from '@react-three/postprocessing';
 
-export default function Effects() {
-  const bloom = useBloomController();
-  const ao = useAmbientOcclusionController();
-  const aa = useAntiAliasingController();
-  const autoFocus = useAutoFocusController();
-  const dof = useDepthOfFieldController();
-  const toneMapping = useToneMappingController();
-  const vignette = useVignetteController();
-  const hueSaturation = useHueSaturationController();
+export type EffectsProps = {
+  bloom: {
+    apply: boolean;
+    intensity: number;
+    luminanceThreshold: number;
+    luminanceSmoothing: number;
+    blend: string;
+  };
+  ao: {
+    apply: boolean;
+    intensity: number;
+    color: string;
+    radius: number;
+    distanceFalloff: number;
+    samples: number;
+    denoiseSamples: number;
+    denoiseRadius: number;
+  };
+  aa: {
+    apply: boolean;
+  };
+  autoFocus: {
+    apply: boolean;
+    smoothTime: number;
+    focusRange: number;
+    bokehScale: number;
+  };
+  dof: {
+    apply: boolean;
+    bokehScale: number;
+    focusDistance: number;
+    focalLength: number;
+  };
+  toneMapping: {
+    apply: boolean;
+    blend: string;
+    mode: string;
+    adaptive: boolean;
+    middleGrey: number;
+    maxLuminance: number;
+    minLuminance: number;
+    averageLuminance: number;
+    adaptationRate: number;
+  };
+  vignette: {
+    apply: boolean;
+    blend: string;
+    eskil: boolean;
+    offset: number;
+    darkness: number;
+  };
+  hueSaturation: {
+    apply: boolean;
+    blend: string;
+    saturation: number;
+    hue: number;
+  };
+};
 
+export default function Effects({
+  bloom,
+  ao,
+  aa,
+  autoFocus,
+  dof,
+  toneMapping,
+  vignette,
+  hueSaturation,
+}: EffectsProps) {
   return (
     <EffectComposer>
       {bloom.apply ? (
