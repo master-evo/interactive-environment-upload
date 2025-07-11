@@ -3,6 +3,7 @@ import useAntiAliasingController from '@/features/debug/useAntiAliasingControlle
 import useAutoFocusController from '@/features/debug/useAutoFocusController';
 import useBloomController from '@/features/debug/useBloomController';
 import useDepthOfFieldController from '@/features/debug/useDepthOfFieldController';
+import useHueSaturationController from '@/features/debug/useHueSaturationController';
 import useToneMappingController from '@/features/debug/useToneMappingController';
 import useVignetteController from '@/features/debug/useVignetteController';
 import { blends, toneMappings } from '@/features/effects/consts';
@@ -11,6 +12,7 @@ import {
   Bloom,
   DepthOfField,
   EffectComposer,
+  HueSaturation,
   N8AO,
   SMAA,
   ToneMapping,
@@ -25,6 +27,7 @@ export default function Effects() {
   const dof = useDepthOfFieldController();
   const toneMapping = useToneMappingController();
   const vignette = useVignetteController();
+  const hueSaturation = useHueSaturationController();
 
   return (
     <EffectComposer>
@@ -83,6 +86,16 @@ export default function Effects() {
           darkness={vignette.darkness}
           eskil={vignette.eskil}
           blendFunction={blends[vignette.blend]}
+        />
+      ) : (
+        <></>
+      )}
+
+      {hueSaturation.apply ? (
+        <HueSaturation
+          blendFunction={blends[hueSaturation.blend]}
+          hue={hueSaturation.hue}
+          saturation={hueSaturation.saturation}
         />
       ) : (
         <></>
