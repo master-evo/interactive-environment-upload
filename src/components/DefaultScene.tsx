@@ -1,6 +1,6 @@
 import useSceneController from '@/features/debug/useSceneController';
 import Effects from '@/features/effects/Effects';
-import { Environment, Sky } from '@react-three/drei';
+import { Bvh, Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -121,16 +121,18 @@ function SceneContent({
           mieCoefficient={sceneSettings.mieCoefficient}
         />
       )}
+      <Bvh firstHitOnly>
+        {children}
+        <StaticModel
+          url={modelUrl}
+          lightmapUrl={hdrUrl}
+          lightMapIntensity={sceneSettings.lightMapIntensity}
+          onLoaded={() => {
+            setEnvLoaded(true);
+          }}
+        />
+      </Bvh>
 
-      {children}
-      <StaticModel
-        url={modelUrl}
-        lightmapUrl={hdrUrl}
-        lightMapIntensity={sceneSettings.lightMapIntensity}
-        onLoaded={() => {
-          setEnvLoaded(true);
-        }}
-      />
       {envLoaded && <PlayerController camera={camRef.current} />}
       <Effects />
     </>
