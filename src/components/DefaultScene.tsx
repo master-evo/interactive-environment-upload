@@ -1,5 +1,5 @@
 import Effects from '@/features/effects/Effects';
-import { Environment } from '@react-three/drei';
+import { Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { useEffect, useRef, useState } from 'react';
@@ -135,6 +135,7 @@ function SceneContent({
         environmentIntensity={environmentIntensity}
         resolution={32}
       />
+      <Sky distance={450000} sunPosition={[1, 1, -1]} mieCoefficient={0} />
       {children}
       <StaticModel
         url={modelUrl}
