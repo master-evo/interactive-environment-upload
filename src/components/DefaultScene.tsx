@@ -1,7 +1,7 @@
 import Effects from '@/features/effects/Effects';
 import { Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
-import { useControls } from 'leva';
+import { folder, useControls } from 'leva';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { EXRLoader, RGBELoader } from 'three-stdlib';
@@ -62,28 +62,47 @@ function SceneContent({
   // @ts-expect-error: loadingEnv not used
   const [loadingEnv, setLoadingEnv] = useState(false);
 
-  const { ambientLightIntensity, environmentIntensity, lightMapIntensity } =
-    useControls(
-      'scene',
-      {
-        ambientLightIntensity: {
+  const {
+    ambientLightIntensity,
+    environmentIntensity,
+    lightMapIntensity,
+    distance,
+    mieCoefficient,
+    position,
+  } = useControls(
+    'scene',
+    {
+      ambientLightIntensity: {
+        value: 0,
+        min: 0,
+        step: 0.1,
+      },
+      environmentIntensity: {
+        value: 0.2,
+        min: 0,
+        step: 0.1,
+      },
+      lightMapIntensity: {
+        value: 1,
+        min: 0,
+        step: 0.1,
+      },
+      sun: folder({
+        distance: {
+          value: 450000,
+          min: 100,
+          step: 1000,
+        },
+        position: [1, 1, -1],
+        mieCoefficient: {
           value: 0,
           min: 0,
-          step: 0.1,
+          step: 0.0001,
         },
-        environmentIntensity: {
-          value: 0.2,
-          min: 0,
-          step: 0.1,
-        },
-        lightMapIntensity: {
-          value: 1,
-          min: 0,
-          step: 0.1,
-        },
-      },
-      { collapsed: true },
-    );
+      }),
+    },
+    { collapsed: true },
+  );
 
   // Carrega HDR/EXR manualmente
   useEffect(() => {
@@ -135,7 +154,11 @@ function SceneContent({
         environmentIntensity={environmentIntensity}
         resolution={32}
       />
-      <Sky distance={450000} sunPosition={[1, 1, -1]} mieCoefficient={0} />
+      <Sky
+        distance={distance}
+        sunPosition={position}
+        mieCoefficient={mieCoefficient}
+      />
       {children}
       <StaticModel
         url={modelUrl}
