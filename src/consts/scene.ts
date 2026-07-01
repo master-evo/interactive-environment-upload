@@ -7,7 +7,7 @@ export const scene: {
   position: [number, number, number];
   mieCoefficient: number;
 } = {
-  ambientLightIntensity: 0,
+  ambientLightIntensity: 2.0,
   environmentIntensity: 0.4,
   lightMapIntensity: 1,
   sun: true,

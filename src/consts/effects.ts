@@ -17,7 +17,7 @@ export const effects = {
     denoiseRadius: 12,
   },
   aa: {
-    apply: true,
+    apply: false,
   },
   autoFocus: {
     apply: true,
