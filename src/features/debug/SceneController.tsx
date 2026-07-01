@@ -9,7 +9,7 @@ export default function SceneController({
 }: {
   children?: React.ReactNode;
   modelUrl: string;
-  hdrUrl: string;
+  hdrUrl?: string;
   disableEnvironment?: boolean;
   sceneSettings?: Partial<{
     ambientLightIntensity: number;

@@ -12,7 +12,7 @@ interface IManualViewportProps {
   className: string;
   onLoading?: (step: LoaderStep) => void;
   modelUrl: string;
-  hdrUrl: string;
+  hdrUrl?: string;
 }
 
 export default function ManualViewport({

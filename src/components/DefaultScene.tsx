@@ -3,18 +3,20 @@ import CopyButton from '@/features/debug/CopyButton';
 import EffectsController from '@/features/debug/EffectsController';
 import { Bvh, Environment, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { EXRLoader, RGBELoader } from 'three-stdlib';
 import { FpsCounter } from '../features/debug/FpsCounter';
 import PlayerController from '../features/player-controller/PlayerController';
 import StaticModel from './StaticModel';
 
+const DEFAULT_HDR_URL = '/assets/passendorf_snow_1k.exr';
+
 interface IDefaultSceneProps {
   children?: React.ReactNode;
   className?: string;
   modelUrl: string;
-  hdrUrl: string;
+  hdrUrl?: string;
 }
 
 function SceneContent({
@@ -25,7 +27,7 @@ function SceneContent({
 }: {
   children: React.ReactNode;
   modelUrl: string;
-  hdrUrl: string;
+  hdrUrl?: string;
   disableEnvironment?: boolean;
   sceneSettings: {
     ambientLightIntensity: number;
@@ -67,36 +69,25 @@ function SceneContent({
     set({ camera: camRef.current });
   }, [set]);
 
-  const [envLoaded, setEnvLoaded] = useState(false);
-  // @ts-expect-error: envMap not used
-  const [envMap, setEnvMap] = useState<THREE.Texture | null>(null);
-  // @ts-expect-error: loadingEnv not used
-  const [loadingEnv, setLoadingEnv] = useState(false);
-
   // Carrega HDR/EXR manualmente
   useEffect(() => {
-    if (!hdrUrl) return;
-    setLoadingEnv(true);
+    const resolvedHdrUrl = hdrUrl ?? DEFAULT_HDR_URL;
     let disposed = false;
     let loader: RGBELoader | EXRLoader;
-    const isEXR = hdrUrl.toLowerCase().endsWith('.exr');
+    const isEXR = resolvedHdrUrl.toLowerCase().endsWith('.exr');
     if (isEXR) {
       loader = new EXRLoader();
     } else {
       loader = new RGBELoader();
     }
     loader.load(
-      hdrUrl,
+      resolvedHdrUrl,
       (texture) => {
         if (disposed) return;
         texture.mapping = THREE.EquirectangularReflectionMapping;
-        setEnvMap(texture);
-        setLoadingEnv(false);
       },
       undefined,
       (err) => {
-        setEnvMap(null);
-        setLoadingEnv(false);
         console.error('Erro ao carregar HDR/EXR:', err);
       },
     );
@@ -134,15 +125,12 @@ function SceneContent({
         {children}
         <StaticModel
           url={modelUrl}
-          lightmapUrl={hdrUrl}
+          lightmapUrl={hdrUrl ?? DEFAULT_HDR_URL}
           lightMapIntensity={sceneSettings.lightMapIntensity}
-          onLoaded={() => {
-            setEnvLoaded(true);
-          }}
         />
       </Bvh>
 
-      {envLoaded && <PlayerController camera={camRef.current} />}
+      <PlayerController camera={camRef.current} />
       <EffectsController {...effects} />
       <CopyButton />
     </>

@@ -13,6 +13,8 @@ import {
 } from '@/utils';
 import { useEffect, useState } from 'react';
 
+const DEFAULT_HDR_URL = '/assets/passendorf_snow_1k.exr';
+
 export default function InteractiveManual() {
   const [progress, setProgress] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -20,7 +22,7 @@ export default function InteractiveManual() {
   const [showDebug] = useState(false); // Mantém showDebug para MobileControls, mas remove setShowDebug
   const [currentType, setCurrentType] = useState<string | undefined>(undefined);
   const [modelUrl, setModelUrl] = useState<string | null>(null);
-  const [hdrUrl, setHdrUrl] = useState<string | null>(null);
+  const [hdrUrl, setHdrUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (loaded && !started) {
@@ -29,12 +31,12 @@ export default function InteractiveManual() {
     }
   }, [loaded, started]);
 
-  if (!modelUrl || !hdrUrl) {
+  if (!modelUrl) {
     return (
       <UploadScreen
         onUpload={(model, hdr) => {
           setModelUrl(model);
-          setHdrUrl(hdr);
+          setHdrUrl(hdr ?? DEFAULT_HDR_URL);
         }}
       />
     );
@@ -60,7 +62,7 @@ export default function InteractiveManual() {
                   setCurrentType(step.currentType);
                 }}
                 modelUrl={modelUrl}
-                hdrUrl={hdrUrl}
+                hdrUrl={hdrUrl ?? DEFAULT_HDR_URL}
               />
               {isMobile && (
                 <MobileControls
